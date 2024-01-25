@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\Users;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -14,6 +15,11 @@ use App\Models\Products;
 
 class ProfileController extends Controller
 {
+    public function getAllUsers() {
+        $data = Users::all();
+
+        return $data;
+    }
     /**
      * Display the user's profile form.
      */
