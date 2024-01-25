@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\Users;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -10,9 +11,15 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Inertia\Response;
+use App\Models\Products;
 
 class ProfileController extends Controller
 {
+    public function getAllUsers() {
+        $data = Users::all();
+
+        return $data;
+    }
     /**
      * Display the user's profile form.
      */
@@ -24,6 +31,20 @@ class ProfileController extends Controller
         ]);
     }
 
+    /**
+     * get all data from products
+     **/
+    public function getProducts() {
+        $data = Products::all();
+
+        return $data;
+    }
+
+    public function store(Request $request) {
+        $data = new Products();
+        $data -> title = $request -> $title;
+        $data -> description = $request-> $description;
+    }
     /**
      * Update the user's profile information.
      */
