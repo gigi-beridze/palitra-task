@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Inertia\Response;
+use App\Models\Products;
 
 class ProfileController extends Controller
 {
@@ -24,6 +25,20 @@ class ProfileController extends Controller
         ]);
     }
 
+    /**
+     * get all data from products
+     **/
+    public function getProducts() {
+        $data = Products::all();
+
+        return $data;
+    }
+
+    public function store(Request $request) {
+        $data = new Products();
+        $data -> title = $request -> $title;
+        $data -> description = $request-> $description;
+    }
     /**
      * Update the user's profile information.
      */
