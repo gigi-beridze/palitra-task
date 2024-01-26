@@ -40,11 +40,11 @@ class ProfileController extends Controller
         return $data;
     }
 
-    public function store(Request $request) {
-        $data = new Products();
-        $data -> title = $request -> $title;
-        $data -> description = $request-> $description;
-    }
+    // public function store(Request $request) {
+    //     $data = new Products();
+    //     $data -> title = $request -> $title;
+    //     $data -> description = $request-> $description;
+    // }
     /**
      * Update the user's profile information.
      */

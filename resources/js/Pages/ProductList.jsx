@@ -5,8 +5,9 @@ import Categories from "@/Components/Caregories.jsx";
 
 const ProductList = () => {
     const [products, setProducts] = useState([]);
-    const [quantity, setQuantity] = useState(0);
+    const [quantity, setQuantity] = useState(1);
     const [categorieId, setCategorieId] = useState('');
+
 
     useEffect(() => {
         axios.get(`/api/products/${categorieId}`)
@@ -33,9 +34,29 @@ const ProductList = () => {
             .catch(error => console.error('Error adding to cart:', error));
     };
 
+    const submitAddtocart = (productId) => {
+        
+        const data = {
+            product_id: productId,
+            product_qty: quantity,
+        }
+
+        axios.post(`/api/add-to-cart`, data).then(res=>{
+            if(res.data.status === 201){
+                alert("its added", res.data.message, "success");
+            }else if(res.data.status === 409){
+                alert("already exist", res.data.message, "already exist");
+            }else if(res.data.status === 401){
+                alert("Error", res.data.message, "error");
+            }else if(res.data.status === 404){
+                alert(res.data.message);
+            }
+        });
+
+    }
+
     const cartItemCount = (sessionStorage.getItem('cart') && JSON.parse(sessionStorage.getItem('cart')).length) || 0;
     const [category, setCategory] = useState(null);
-    console.log(products)
     return (
         <div>
             <Categories setCategorieId={setCategorieId} />
@@ -51,7 +72,10 @@ const ProductList = () => {
                         <img src={product.image} alt={product.title}
                              className="w-full h-40 bg-cover object-contain mb-2"/>
                         <button
-                            onClick={() => addToCart(product.id)}
+                            onClick={(e) => {
+                                e.preventDefault(); 
+                                submitAddtocart(product.id);
+                            }}
                             className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600"
                         >
                             Add to Cart
