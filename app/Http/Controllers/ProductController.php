@@ -6,6 +6,7 @@ use App\Models\Cart;
 use App\Models\Categories;
 use App\Models\Products;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller {
     public function getCategories() {
@@ -50,5 +51,13 @@ class ProductController extends Controller {
                 'message' => 'login to add cart',
             ]);
         }
+    }
+    public function getProductsByCategory($categoryId)
+    {
+        $products = DB::table('products')
+            ->where('categoryId', $categoryId)
+            ->get();
+    
+        return response()->json($products);
     }
 }
