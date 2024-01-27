@@ -6,12 +6,16 @@ const Cart = () => {
     const [loading, setLoading] = useState(true);
     const [cart, setCart] = useState([]);
     const totalItems = cart.length;
-    
+
+    localStorage.setItem('cartCount', totalItems);
+
+    const cartCount = localStorage.getItem('cartCount')
+
     const totalAmount = cart.reduce((total, product) => {
         const price = parseFloat(product.product.price);
         const quantity = parseInt(product.product_qty);
         return total + (price * quantity);
-      }, 0);      
+    }, 0);          
 
     useEffect(() => {    
         axios.get('/api/cart')
@@ -44,17 +48,18 @@ const Cart = () => {
 
     const deleteCartItem = (e, cart_id) => {
         e.preventDefault();
-
+        localStorage.setItem('cartCount',localStorage.getItem('cartCount') - 1);
         const thisClicked = e.currentTarget;
         thisClicked.innerText = "Removing..";
 
         axios.delete(`/api/delete-cartitem/${cart_id}`).then(res => {
             if(res.data.status === 200) {
                 thisClicked.closest(".cart-div").remove();
+                console.log(cartCount)
             } else {
                 thisClicked.innerText = "Remove";
             }
-        })
+        });
     }
 
     if(loading) {
@@ -156,7 +161,7 @@ const Cart = () => {
         );
     } else {
         return (
-            <div class="flex items-center justify-center h-screen flex-col">
+            <div className="flex items-center justify-center h-screen flex-col">
                 <h1 className="text-7xl">your cart is empty!</h1>
                 <br />
                 <Link
