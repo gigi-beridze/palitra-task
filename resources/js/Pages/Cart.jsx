@@ -52,10 +52,13 @@ const Cart = () => {
         const thisClicked = e.currentTarget;
         thisClicked.innerText = "Removing..";
 
+        setCart(cart.filter(item => item.id !== cart_id));
+        
         axios.delete(`/api/delete-cartitem/${cart_id}`).then(res => {
             if(res.data.status === 200) {
                 thisClicked.closest(".cart-div").remove();
-                console.log(cartCount)
+
+                   
             } else {
                 thisClicked.innerText = "Remove";
             }
