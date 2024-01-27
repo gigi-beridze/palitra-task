@@ -55,6 +55,8 @@ Route::get('/api/cart', [CartController::class, 'viewCart']);
 Route::put('/api/cart-updatequantity/{cart_id}/{scope}', [CartController::class, 'updateQuantity']);
 Route::delete('/api/delete-cartitem/{cart_id}', [CartController::class, 'deleteCartItem']);
 
+Route::get('/api/products/{categoryId}', [ProductController::class, 'getProductsByCategory']);
+
 
 Route::post('/cart/add/{product}', [CartController::class, 'addToCart']);
 Route::delete('/cart/remove/{product}', [CartController::class, 'removeFromCart']);

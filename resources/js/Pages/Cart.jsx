@@ -1,6 +1,7 @@
 import {useEffect, useState} from "react";
 import axios from "axios";
-import {Link} from "@inertiajs/react";
+import { Link } from "@inertiajs/react";
+import Checkout from "./Checkout";
 
 const Cart = () => {
     const [loading, setLoading] = useState(true);
@@ -9,7 +10,7 @@ const Cart = () => {
 
     localStorage.setItem('cartCount', totalItems);
 
-    const cartCount = localStorage.getItem('cartCount')
+    const cartCount = localStorage.getItem('cartCount');
 
     const totalAmount = cart.reduce((total, product) => {
         const price = parseFloat(product.product.price);
@@ -63,6 +64,11 @@ const Cart = () => {
                 thisClicked.innerText = "Remove";
             }
         });
+    }
+
+    const checkout = () => {
+        localStorage.setItem('cartData', JSON.stringify(cart));
+        window.location.href = "/checkout";
     }
 
     if(loading) {
@@ -155,6 +161,7 @@ const Cart = () => {
                             </div>
                             <span className="font-semibold text-gray-600 text-xs uppercase w-2/5">+ 10$ for shipping</span>
                             <button
+                                onClick={checkout}
                                 className="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 my-2 text-sm text-white uppercase w-full">Checkout
                             </button>
                         </div>
