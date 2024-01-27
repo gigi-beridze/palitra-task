@@ -1,4 +1,4 @@
-
+```
 npm install
 
 composer install
@@ -8,6 +8,7 @@ Edit the actual .env file
 php artisan serve
 
 npm run dev
+```
 
 congratulations best website is working now) !
 
